@@ -1,21 +1,21 @@
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
+import {clsx, type ClassValue} from 'clsx';
+import {twMerge} from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+	return twMerge(clsx(inputs));
 }
 
 export const routes = [
-  {
-    name: "About us",
-    link: "/",
-  },
-  {
-    name: "Event",
-    link: "/event",
-  },
-  {
-    name: "Contact",
-    link: "/contact",
-  },
+	{
+		name: 'About us',
+		link: '/',
+	},
+	{
+		name: 'Event',
+		link: '/event',
+	},
+	{
+		name: 'Contact',
+		link: '/contact',
+	},
 ];
