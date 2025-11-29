@@ -22,23 +22,32 @@ jobs:
      run: |
       rsync -avz --delete \
         -e "ssh -o StrictHostKeyChecking=no" \
+        --exclude 'node_modules' \
+        --exclude '.git' \
         ./ \
         ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:${{ secrets.PROJECT_PATH }}
 
-   - name: Run commands on server
+   - name: Deploy with Docker on server
      run: |
       ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
         cd ${{ secrets.PROJECT_PATH }}
         
-        echo "📦 Pulling latest build..."
-        pnpm install --frozen-lockfile
+        echo "🐳 Building Docker image..."
+        docker build -t my-app:latest .
         
-        echo "⚙️ Building project..."
-        pnpm build
+        echo "🔁 Stopping existing container..."
+        docker stop my-app-container || true
+        docker rm my-app-container || true
         
-        echo "🔁 Restarting PM2..."
-        pm2 stop all || true
-        pm2 start ecosystem.config.cjs
+        echo "🚀 Starting new container..."
+        docker run -d \
+          --name my-app-container \
+          --restart unless-stopped \
+          -p 3000:3000 \
+          my-app:latest
+        
+        echo "🧹 Cleaning up unused images..."
+        docker image prune -f
         
         echo "🎉 Deploy completed!"
       EOF
