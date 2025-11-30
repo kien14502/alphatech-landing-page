@@ -8,7 +8,7 @@ const GeneralIntroduction = () => {
 	const items = HOME_DATA['general-introduction'].items;
 
 	return (
-		<div className="w-screen h-screen flex flex-col items-center justify-center gap-8">
+		<div className="flex flex-col items-center justify-center gap-8">
 			<SectionTitle title="General Introduction" />
 			<div
 				className={cn(

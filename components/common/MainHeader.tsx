@@ -6,11 +6,13 @@ import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 import {useEffect, useState} from 'react';
 import {Button} from '../ui/button';
+import Image from 'next/image';
+import HeaderCollapse from './HeaderCollapse';
 
 const MainHeader = () => {
 	const pathname = usePathname();
-	const [isVisible, setIsVisible] = useState(true);
-	const [lastScrollY, setLastScrollY] = useState(0);
+	const [isVisible, setIsVisible] = useState<boolean>(true);
+	const [lastScrollY, setLastScrollY] = useState<number>(0);
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -28,18 +30,21 @@ const MainHeader = () => {
 		};
 
 		window.addEventListener('scroll', handleScroll, {passive: true});
+
 		return () => window.removeEventListener('scroll', handleScroll);
 	}, [lastScrollY]);
 
 	return (
 		<div
 			className={cn(
-				'flex items-center justify-evenly gap-4 bg-[#000000b3] p-(--padding-layout) text-white',
+				'flex items-center h-(--header-height) justify-between sm:justify-evenly gap-4 bg-[#000000b3] p-(--padding-layout) text-white',
 				'fixed top-0 left-0 right-0 z-50 border-b border-border transition-transform duration-300 ease-in-out',
 				isVisible ? 'translate-y-0' : '-translate-y-full',
 			)}>
-			<Link href={'/'}>Logo here</Link>
-			<div className="flex items-center">
+			<Link href={'/'}>
+				<Image width={48} height={48} src={'/icons/logo.svg'} alt="" />
+			</Link>
+			<div className="hidden sm:flex items-center">
 				{routes.map((route) => (
 					<Link
 						className={cn(
@@ -66,9 +71,10 @@ const MainHeader = () => {
 					</Link>
 				))}
 			</div>
-			<Link href="/contact">
+			<Link className="hidden sm:block" href="/contact">
 				<Button>Get In Touch</Button>
 			</Link>
+			<HeaderCollapse />
 		</div>
 	);
 };

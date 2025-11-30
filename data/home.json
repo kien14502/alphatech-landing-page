@@ -37,5 +37,33 @@
 				"description": "Downloads worldwide"
 			}
 		]
+	},
+	"partners": {
+		"items": [
+			{
+				"name": "google play",
+				"imgUrl": "/images/partners/google-play.png"
+			},
+			{
+				"name": "Meta audience network",
+				"imgUrl": "/images/partners/meta-audience-network.png"
+			},
+			{
+				"name": "Apple search ads",
+				"imgUrl": "/images/partners/apple-search-ads.png"
+			},
+			{
+				"name": "Google admod",
+				"imgUrl": "/images/partners/google-admod.png"
+			},
+			{
+				"name": "unity",
+				"imgUrl": "/images/partners/unity.png"
+			},
+			{
+				"name": "app store",
+				"imgUrl": "/images/partners/app-store.png"
+			}
+		]
 	}
 }
