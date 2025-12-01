@@ -18,16 +18,25 @@ const EventPage = () => {
 	const events: EventItem[] = EVENT_DATA || [];
 
 	return (
-		<div className="pt-(--header-height)">
+		<div className="flex flex-col">
 			{/* Hero Section */}
-			<section className="w-full h-screen flex flex-col items-center justify-center px-4 py-12">
+			<section
+				style={{
+					backgroundImage: "url('/images/banner.png')",
+					backgroundSize: 'cover',
+					backgroundPosition: 'center',
+					backgroundRepeat: 'no-repeat',
+				}}
+				className="w-full h-screen flex flex-col items-center justify-center px-4 py-12">
 				<motion.div
 					initial={{opacity: 0, y: -20}}
 					animate={{opacity: 1, y: 0}}
 					transition={{duration: 0.6, ease: 'easeOut'}}
 					className="text-center max-w-3xl">
-					<h1 className="text-4xl md:text-6xl font-bold mb-4">Events & Speaking</h1>
-					<p className="text-lg md:text-xl text-secondary-foreground mb-8">
+					<h1 className="text-4xl md:text-6xl font-bold mb-4 text-white text-shadow-2xs">
+						Events & Speaking
+					</h1>
+					<p className="text-lg md:text-xl text-white mb-8 text-shadow-2xs">
 						Join us at industry-leading conferences and events where we share our
 						insights on mobile app development and innovation.
 					</p>

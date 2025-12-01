@@ -6,9 +6,11 @@ import {useForm} from 'react-hook-form';
 import {Form} from '../ui/form';
 import InputForm from './InputForm';
 import {Button} from '../ui/button';
-import {Mail, Phone, Send, User} from 'lucide-react';
+import {Loader, Mail, Phone, Send, User} from 'lucide-react';
 import TextareaForm from './TextareaForm';
 import {sendEmail} from '@/services/contact-service';
+import {useState} from 'react';
+import {toast} from 'sonner';
 
 const ContactForm = () => {
 	const form = useForm<ContactFormData>({
@@ -21,9 +23,18 @@ const ContactForm = () => {
 		resolver: zodResolver(ContactSchema),
 	});
 
+	const [loading, setLoading] = useState<boolean>(false);
+
 	const onSubmit = async (data: ContactFormData) => {
-		const res = await sendEmail(data);
-		console.log(res);
+		setLoading(true);
+		try {
+			const res = await sendEmail(data);
+			toast.success(res.data.message);
+		} catch (error) {
+			toast.success(JSON.stringify(error));
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	return (
@@ -37,7 +48,7 @@ const ContactForm = () => {
 					name="name"
 					placeholder="Name"
 				/>
-				<div className="grid grid-cols-2 gap-8">
+				<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 					<InputForm
 						prefix={<Mail />}
 						control={form.control}
@@ -52,8 +63,8 @@ const ContactForm = () => {
 					/>
 				</div>
 				<TextareaForm control={form.control} name="message" placeholder="Message" />
-				<Button className="rounded-full" size={'xl'}>
-					<Send />
+				<Button disabled={loading} className="rounded-full" size={'xl'}>
+					{loading ? <Loader className="animate-spin" /> : <Send />}
 					Send
 				</Button>
 			</form>
